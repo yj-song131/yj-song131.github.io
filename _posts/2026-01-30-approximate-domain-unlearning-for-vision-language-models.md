@@ -4,6 +4,8 @@ date: 2026-01-30 17:47:00 +0900
 last_modified_at: '2026-02-06'
 categories:
   - Computer Vision
+toc: true
+toc_sticky: true
 ---
 
 > NeurIPS 2025 Spotlight. [[Paper]](https://arxiv.org/abs/2510.08132) [[Github]](https://github.com/kodaikawamura/domain-unlearning)  
