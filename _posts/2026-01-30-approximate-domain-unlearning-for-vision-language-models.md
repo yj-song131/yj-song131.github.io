@@ -30,8 +30,8 @@ VLM은 뛰어난 generalization capability를 가지고 있음
 
 → but, 특정 downstream task에서는 모든 클래스를 식별할 필요가 없다
 
-- e.g. 자율주행 시스템에서 보행자와 차는 구분해야 하지만 foods랑 groceries는 구분할 필요 X
-그래서 **approximate learning(selective forgetting)**이라는 방법이 주목받게 됨
+- e.g. 자율주행 시스템에서 보행자와 차는 구분해야 하지만 foods랑 groceries는 구분할 필요 X  
+- 그래서 **approximate learning(selective forgetting)**이라는 방법이 주목받게 됨
 
 - 특정 지식은 잊어버리고 나머지는 보존
 
@@ -58,12 +58,12 @@ VLM은 뛰어난 generalization capability를 가지고 있음
 
 notation
 
-- *train data **\{(x,y,d)\}*
-- *x : input image*
-- *y: cls label*
-- *d: domain label*
-- *D_{memorize}** : presearved domain*
-- *D_{forget}** : forgetten domain*
+- train data $\{(x,y,d)\}$
+  - *x : input image*
+  - *y: cls label*
+  - *d: domain label*
+- $D_{memorize}$ : presearved domain
+- $D_{forget}$ : forgetten domain
 
 일반적인 domain unlearning method는 다음 2가지 loss를 함께 사용함
 
@@ -87,7 +87,7 @@ $$L_{CE}(B) = -\frac{1}{|B|} \sum_{i=1}^{|B|} \sum_{j=1}^{|D|} d_{ij} \log p_{ij
 $$MMD^2(B) = \frac{2}{|D|(|D|-1)} \sum_{1 \le d < d' \le |D|} \left\| \frac{1}{|B_d|} \sum_{x_i \in B_d} \phi(x_i) - \frac{1}{|B_{d'}|} \sum_{x_j \in B_{d'}} \phi(x_j) \right\|_H^2$$
 
 - MMD(Maximum Mean Discrepancy) loss를 통해 분포 차이를 계산
-- \phi : kernel-induced feature mapping
+- $\phi$ : kernel-induced feature mapping
 
 $$L_{domain}(B) = \gamma L_{CE}(B) - \lambda MMD^2(B)$$
 
@@ -126,13 +126,13 @@ $$L_{total}(B) = L_{memorize}(B) + L_{forget}(B) + L_{domain}(B)$$
 ![notion-image-1770706555791-ttuqx9.png](/assets/images/notion-image-1770706555791-ttuqx9.png)
 
 
-- \bold{D_{forget}}: 잊혀질 domain의 수
+- $D_{forget}$: 잊혀질 domain의 수
 - ImageNet은 Domain이 2개이기 때문에 D=1만 실험
 - ***Mem**** : *기억해야 할 domain의 정확도(높을수록 좋음)
 - ***For**** : 잊어야 할 domain의 error*
-- error가 높을수록 잘 잊혀짐 
+  - error가 높을수록 잘 잊혀짐 
 - ***H**** : *Mem과 For의 조화평균
-- 값이 높을수록 둘의 밸런스가 좋다
+  - 값이 높을수록 둘의 밸런스가 좋다
 
 
 ### Ablation Study
