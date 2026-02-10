@@ -74,8 +74,29 @@ async function downloadImage(imageUrl, outputPath) {
 async function convertBlocksToMarkdown(blocks, imageDir) {
   let markdown = '';
   const imageMap = new Map(); // 원본 URL -> 로컬 경로 매핑
+  let numberedListCounter = 0; // 번호 목록 카운터
+  let inNumberedList = false; // 번호 목록 안에 있는지 여부
 
-  for (const block of blocks) {
+  for (let i = 0; i < blocks.length; i++) {
+    const block = blocks[i];
+    const prevBlock = i > 0 ? blocks[i - 1] : null;
+    const nextBlock = i < blocks.length - 1 ? blocks[i + 1] : null;
+
+    // 번호 목록 연속 처리
+    if (block.type === 'numbered_list_item') {
+      if (prevBlock?.type !== 'numbered_list_item') {
+        numberedListCounter = 0;
+        inNumberedList = true;
+      }
+      numberedListCounter++;
+    } else {
+      if (inNumberedList && prevBlock?.type === 'numbered_list_item') {
+        markdown += '\n'; // 번호 목록 끝에 빈 줄 추가
+      }
+      inNumberedList = false;
+      numberedListCounter = 0;
+    }
+
     switch (block.type) {
       case 'paragraph':
         if (block.paragraph.rich_text.length > 0) {
@@ -98,11 +119,23 @@ async function convertBlocksToMarkdown(blocks, imageDir) {
         break;
 
       case 'bulleted_list_item':
-        markdown += `- ${convertRichText(block.bulleted_list_item.rich_text)}\n`;
+        const bulletText = convertRichText(block.bulleted_list_item.rich_text);
+        // 다음 블록이 같은 리스트 타입이 아니면 빈 줄 추가
+        if (nextBlock?.type !== 'bulleted_list_item') {
+          markdown += `- ${bulletText}\n\n`;
+        } else {
+          markdown += `- ${bulletText}\n`;
+        }
         break;
 
       case 'numbered_list_item':
-        markdown += `1. ${convertRichText(block.numbered_list_item.rich_text)}\n`;
+        const numberedText = convertRichText(block.numbered_list_item.rich_text);
+        // 다음 블록이 같은 리스트 타입이 아니면 빈 줄 추가
+        if (nextBlock?.type !== 'numbered_list_item') {
+          markdown += `${numberedListCounter}. ${numberedText}\n\n`;
+        } else {
+          markdown += `${numberedListCounter}. ${numberedText}\n`;
+        }
         break;
 
       case 'to_do':
@@ -148,12 +181,48 @@ async function convertBlocksToMarkdown(blocks, imageDir) {
       case 'equation':
         markdown += `$$${block.equation.expression}$$\n\n`;
         break;
+
+      case 'callout':
+        // Callout은 인용 블록으로 변환
+        const calloutIcon = block.callout.icon?.emoji || '💡';
+        const calloutText = convertRichText(block.callout.rich_text);
+        markdown += `> **${calloutIcon} ${calloutText}**\n\n`;
+        break;
+
+      case 'toggle':
+        // Toggle은 접을 수 있는 섹션으로 변환 (HTML details 태그 사용)
+        const toggleText = convertRichText(block.toggle.rich_text);
+        markdown += `<details>\n<summary>${toggleText}</summary>\n\n`;
+        break;
+
+      case 'table':
+        // 테이블은 기본적으로 지원하지 않지만, 나중에 추가 가능
+        markdown += `<!-- Table block (not yet supported) -->\n\n`;
+        break;
+
+      case 'column_list':
+        // 컬럼 리스트는 일반 리스트로 변환
+        break;
+
+      default:
+        // 알 수 없는 블록 타입은 주석으로 표시
+        console.warn(`⚠️  알 수 없는 블록 타입: ${block.type}`);
+        markdown += `<!-- Unsupported block type: ${block.type} -->\n\n`;
+        break;
     }
 
     // 자식 블록이 있으면 재귀적으로 처리
     if (block.has_children) {
       const children = await notion.blocks.children.list({ block_id: block.id });
-      markdown += await convertBlocksToMarkdown(children.results, imageDir);
+      const childMarkdown = await convertBlocksToMarkdown(children.results, imageDir);
+      
+      // Toggle 블록의 경우 details 태그 닫기
+      if (block.type === 'toggle') {
+        markdown += childMarkdown;
+        markdown += `</details>\n\n`;
+      } else {
+        markdown += childMarkdown;
+      }
     }
   }
 
@@ -161,19 +230,29 @@ async function convertBlocksToMarkdown(blocks, imageDir) {
 }
 
 /**
- * Rich Text을 마크다운으로 변환
+ * Rich Text을 마크다운으로 변환 (서식 중첩 지원)
  */
 function convertRichText(richTextArray) {
   return richTextArray.map(text => {
     let content = text.plain_text;
     
-    // 서식 적용
-    if (text.annotations.bold) content = `**${content}**`;
-    if (text.annotations.italic) content = `*${content}*`;
-    if (text.annotations.code) content = `\`${content}\``;
-    if (text.annotations.strikethrough) content = `~~${content}~~`;
+    // 서식 적용 순서 중요: code > strikethrough > bold > italic
+    // 링크는 가장 바깥쪽에 적용
+    if (text.annotations.code) {
+      content = `\`${content}\``;
+    } else {
+      if (text.annotations.strikethrough) {
+        content = `~~${content}~~`;
+      }
+      if (text.annotations.bold) {
+        content = `**${content}**`;
+      }
+      if (text.annotations.italic) {
+        content = `*${content}*`;
+      }
+    }
     
-    // 링크 처리
+    // 링크 처리 (가장 바깥쪽)
     if (text.href) {
       content = `[${content}](${text.href})`;
     }
@@ -426,7 +505,7 @@ async function main() {
   const args = process.argv.slice(2);
   
   if (args.length === 0) {
-    console.error('사용법: node scripts/notion-to-github.js <notion-page-id> [--category "Computer Vision"|"LLM"] [--dry-run]');
+    console.error('사용법: node scripts/notion-to-github.js <notion-page-id> [--category "Computer Vision"|"LLM"|"World Model"] [--dry-run]');
     process.exit(1);
   }
 
