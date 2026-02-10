@@ -6,8 +6,8 @@ categories:
   - Computer Vision
 ---
 
-NeurIPS 2025 Spotlight. [[Paper]](https://arxiv.org/abs/2510.08132) [[Github]](https://github.com/kodaikawamura/domain-unlearning)  
-Kodai Kawamura, Yuta Goto, Rintaro Yanagi, Hirokatsu Kataoka, Go Irie
+> NeurIPS 2025 Spotlight. [[Paper]](https://arxiv.org/abs/2510.08132) [[Github]](https://github.com/kodaikawamura/domain-unlearning)  
+> Kodai Kawamura, Yuta Goto, Rintaro Yanagi, Hirokatsu Kataoka, Go Irie
 
 
 ## 논문 선정 이유
