@@ -129,17 +129,12 @@ $$L_{total}(B) = L_{memorize}(B) + L_{forget}(B) + L_{domain}(B)$$
 
 
 - $D_{forget}$: 잊혀질 domain의 수
-
+  
   - ImageNet은 Domain이 2개이기 때문에 D=1만 실험
-
 - ***Mem**** : 기억해야 할 domain의 정확도(높을수록 좋음)
-
 - ***For**** : 잊어야 할 domain의 error
-
   - error가 높을수록 잘 잊혀짐 
-
 - ***H**** : Mem과 For의 조화평균
-
   - 값이 높을수록 둘의 밸런스가 좋다
 
 
