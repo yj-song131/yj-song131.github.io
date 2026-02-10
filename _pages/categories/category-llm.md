@@ -1,11 +1,10 @@
 ---
-title: "Linear Algebra"
+title: "LLM"
 layout: archive
-permalink: categories/linear-algebra
+permalink: /categories/llm/
 author_profile: true
 sidebar_main: true
 ---
 
-
-{% assign posts = site.categories.linear-algebra %}
+{% assign posts = site.categories["LLM"] %}
 {% for post in posts %} {% include archive-single.html type=page.entries_layout %} {% endfor %}

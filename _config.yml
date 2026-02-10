@@ -20,7 +20,7 @@ rtl                      : # true, false (default) # turns direction of the page
 title                    : "Fake Traveler"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
-name                     : "Song, Yeo Jin"
+name                     : "Yeojin Song"
 description              : "my blog."
 url                      : "https://yeojins.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
