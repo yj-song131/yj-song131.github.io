@@ -6,11 +6,12 @@ categories:
   - Computer Vision
 ---
 
+NeurIPS 2025 Spotlight. [[Paper]](https://arxiv.org/abs/2510.08132) [[Github]](https://github.com/kodaikawamura/domain-unlearning)  
+Kodai Kawamura, Yuta Goto, Rintaro Yanagi, Hirokatsu Kataoka, Go Irie
 
 
 ## 논문 선정 이유
 
----
 
 Domain Generalization 연구 ing
 
@@ -21,8 +22,6 @@ domain dist를 명시적으로 분리하는 loss 우리 연구에도 쓸 수 있
 
 
 ## Introduction
-
----
 
 VLM은 뛰어난 generalization capability를 가지고 있음
 
@@ -43,19 +42,10 @@ VLM은 뛰어난 generalization capability를 가지고 있음
 
 ## Related Work
 
----
-
-
-
-
-
-
 
 
 
 ## Main Method
-
----
 
 
 ![notion-image-1770706549239-vs3lnr.png](/assets/images/notion-image-1770706549239-vs3lnr.png)
@@ -88,7 +78,7 @@ $$L_{forget}(B) = -\frac{1}{|B|} \sum_{i=1}^{|B|} \sum_{j=1}^{|C|} \frac{1}{|C|}
 
 **idea** : domain 간 feature가 잘 분리되어 있으면 주어진 sample의 domain label d를 정확하게 맞힐 수 있다 & vice versa
 
-$$L_{CE}(B) = -\frac{1}{|B|} \sum_{i=1}{|B|} \sum_{j=1}^{|D|} d_{ij} \log p_{ij}^d$$
+$$L_{CE}(B) = -\frac{1}{|B|} \sum_{i=1}^{|B|} \sum_{j=1}^{|D|} d_{ij} \log p_{ij}^d$$
 
 - label이 domain인 CE Loss를 통해 domain을 잘 맞히도록 학습
 $$MMD^2(B) = \frac{2}{|D|(|D|-1)} \sum_{1 \le d < d' \le |D|} \left\| \frac{1}{|B_d|} \sum_{x_i \in B_d} \phi(x_i) - \frac{1}{|B_{d'}|} \sum_{x_j \in B_{d'}} \phi(x_j) \right\|_H^2$$
@@ -122,8 +112,6 @@ $$L_{total}(B) = L_{memorize}(B) + L_{forget}(B) + L_{domain}(B)$$
 
 
 ## Experiments
-
----
 
 
 - Domain Unlearning이라는 task를 본 논문에서 처음 정의했기 때문에 existing method가 없음

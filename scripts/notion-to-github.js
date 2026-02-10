@@ -469,24 +469,19 @@ async function main() {
       }
     }
 
-    // 3/4단계: 노션 업데이트/클린업
+    // 3단계: 노션 페이지에 블로그 링크 업데이트
     // 안전을 위해 push를 하지 않는 경우(=원격 반영이 확정되지 않음)에는 기본적으로 노션 변경을 스킵
     if (dryRun) {
       console.log('\n🔗 3단계: 노션 페이지에 블로그 링크 업데이트 중...\n');
       await updateNotionPageLink(pageId, postInfo.blogUrl, dryRun);
-      console.log('\n🧹 4단계: 노션 페이지 본문 삭제 중...\n');
-      await clearNotionPageContent(pageId, dryRun);
     } else if (noNotion) {
-      console.log('\n⏭️ 3/4단계: --no-notion 옵션으로 노션 업데이트/본문 삭제를 건너뜁니다.\n');
+      console.log('\n⏭️ 3단계: --no-notion 옵션으로 노션 링크 업데이트를 건너뜁니다.\n');
     } else if (noPush) {
-      console.log('\n⏭️ 3/4단계: --no-push 사용 시, 안전을 위해 노션 업데이트/본문 삭제를 기본 스킵합니다.\n');
+      console.log('\n⏭️ 3단계: --no-push 사용 시, 안전을 위해 노션 링크 업데이트를 기본 스킵합니다.\n');
       console.log('   (원하면 push 후 다시 실행하거나, --no-notion을 빼고 push 성공 뒤에 수행하세요)\n');
     } else {
       console.log('\n🔗 3단계: 노션 페이지에 블로그 링크 업데이트 중...\n');
       await updateNotionPageLink(pageId, postInfo.blogUrl, dryRun);
-
-      console.log('\n🧹 4단계: 노션 페이지 본문 삭제 중...\n');
-      await clearNotionPageContent(pageId, dryRun);
     }
 
     console.log('\n✅ 모든 작업이 완료되었습니다!');
