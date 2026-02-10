@@ -3,9 +3,7 @@ title: Approximate Domain Unlearning for Vision-Language Models
 date: 2026-01-30 17:47:00 +0900
 last_modified_at: '2026-02-06'
 categories:
-  - Computer Vision
-toc: true
-toc_sticky: true
+  - Computer Vision 
 excerpt: "NeurIPS 2025 Spotlight"
 ---
 
@@ -31,25 +29,18 @@ VLM은 뛰어난 generalization capability를 가지고 있음
 → but, 특정 downstream task에서는 모든 클래스를 식별할 필요가 없다
 
 - e.g. 자율주행 시스템에서 보행자와 차는 구분해야 하지만 foods랑 groceries는 구분할 필요 X  
-- 그래서 **approximate learning(selective forgetting)**이라는 방법이 주목받게 됨
+- 그래서 **approximate learning (selective forgetting)** 이라는 방법이 주목받게 됨
 
-- 특정 지식은 잊어버리고 나머지는 보존
+  - 특정 지식은 잊어버리고 나머지는 보존
 
 지금까지는 잊어버릴 클래스에 대한 loss는 높이고 유지될 클래스에 대한 loss를 낮추는 방향으로 연구 진행
 
 → 그러나, 단순히 class를 잊어버리는 것이 real-world applications에서 효과적이지 않다. 
 
 - e.g., 자율주행 시스템에서 간판의 차 그림이 실제 car로 인식되면 큰 위험
-![notion-image-1770706547605-fni4gs.png](/assets/images/notion-image-1770706547605-fni4gs.png)
-
-
-## Related Work
-
-
-
+  ![notion-image-1770706547605-fni4gs.png](/assets/images/notion-image-1770706547605-fni4gs.png)
 
 ## Main Method
-
 
 ![notion-image-1770706549239-vs3lnr.png](/assets/images/notion-image-1770706549239-vs3lnr.png)
 
@@ -62,6 +53,7 @@ notation
   - *x : input image*
   - *y: cls label*
   - *d: domain label*
+
 - $D_{memorize}$ : presearved domain
 - $D_{forget}$ : forgetten domain
 
