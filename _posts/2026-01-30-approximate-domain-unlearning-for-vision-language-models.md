@@ -76,20 +76,20 @@ $$L_{forget}(B) = -\frac{1}{|B|} \sum_{i=1}^{|B|} \sum_{j=1}^{|C|} \frac{1}{|C|}
 
 **idea** : domain 간 feature가 잘 분리되어 있으면 주어진, sample의 domain label d를 정확하게 맞힐 수 있다 & vice versa
 
-1. CE Loss : label이 domain인 CE Loss를 통해 domain을 잘 맞히도록 학습  
+1. CE Loss : label이 domain인 CE Loss를 통해 domain을 잘 맞히도록 학습
 
 $$L_{CE}(B) = -\frac{1}{|B|} \sum_{i=1}^{|B|} \sum_{j=1}^{|D|} d_{ij} \log p_{ij}^d$$
 
-2. MMD Loss : MMD(Maximum Mean Discrepancy) loss를 통해 분포 차이를 계산  
-   - $\phi$ : kernel-induced feature mapping  
+2. MMD Loss : MMD(Maximum Mean Discrepancy) loss를 통해 분포 차이를 계산
+   - $\phi$ : kernel-induced feature mapping
 
 $$MMD^2(B) = \frac{2}{|D|(|D|-1)} \sum_{1 \le d < d' \le |D|} \left\| \frac{1}{|B_d|} \sum_{x_i \in B_d} \phi(x_i) - \frac{1}{|B_{d'}|} \sum_{x_j \in B_{d'}} \phi(x_j) \right\|_H^2$$
 
-3. Domain Loss: 이 MMD loss에 -를 붙여 최대화 → Intra-domain divergence를 maximize  
+3. Domain Loss: 이 MMD loss에 -를 붙여 최대화 → Intra-domain divergence를 maximize
 
 $$L_{domain}(B) = \gamma L_{CE}(B) - \lambda MMD^2(B)$$
 
-4. Total loss  
+4. Total loss
 
 $$L_{total}(B) = L_{memorize}(B) + L_{forget}(B) + L_{domain}(B)$$
 
