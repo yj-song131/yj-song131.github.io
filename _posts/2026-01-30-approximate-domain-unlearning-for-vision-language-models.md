@@ -6,6 +6,7 @@ categories:
   - Computer Vision
 toc: true
 toc_sticky: true
+excerpt: "NeurIPS 2025 Spotlight"
 ---
 
 > NeurIPS 2025 Spotlight. [[Paper]](https://arxiv.org/abs/2510.08132) [[Github]](https://github.com/kodaikawamura/domain-unlearning)  
