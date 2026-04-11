@@ -1,7 +1,0 @@
-main:
-  - title: "Home"
-    url: "/"
-  - title: "Introduce"
-    url: /about/
-  - title: "Category"
-    url: "/categories/"
