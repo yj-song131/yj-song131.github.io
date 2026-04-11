@@ -43,9 +43,9 @@ My research focuses on unlocking and properly leveraging the language capabiliti
           <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
               <tr>
               <td style="padding:16px;width:100%;vertical-align:middle">
-                <h2>Research</h2>
+                <h2>Publications</h2>
                 <p>
-                  I'm interested in computer vision, deep learning, generative AI, and image processing. Most of my research is about inferring the physical world (shape, motion, color, light, etc) from images, usually with radiance fields. Some papers are <span class="highlight">highlighted</span>.
+                * denotes equal contribution.
                 </p>
               </td>
             </tr>
@@ -56,11 +56,7 @@ My research focuses on unlocking and properly leveraging the language capabiliti
 <tr onmouseout="gr3en_stop()" onmouseover="gr3en_start()">
   <td style="padding:16px;width:20%;vertical-align:middle">
     <div class="one">
-      <div class="two" id='gr3en_image'><video  width=100% height=100% muted autoplay loop>
-      <source src="images/gr3en.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-      </video></div>
-      <img src='images/gr3en.jpg' width="160">
+      <img src='images/model_pipeline.jpg' width="160">
     </div>
     <script type="text/javascript">
       function gr3en_start() {
@@ -74,25 +70,28 @@ My research focuses on unlocking and properly leveraging the language capabiliti
     </script>
   </td>
   <td style="padding:20px;width:75%;vertical-align:middle">
-    <a href="https://gr3en-relight.github.io/">
-      <span class="papertitle">GR3EN: Generative Relighting for 3D Environments</span>
+    <a href="https://ieeexplore.ieee.org/abstract/document/11348061">
+      <span class="papertitle">Towards Robust Gait Identification: A Frequency Domain Approach in Varied Surveillance Environments</span>
     </a>
     <br>
-    <a href="https://xyxingx.github.io/">Xiaoyan Xing</a>,
-    <a href="https://henzler.github.io/">Philipp Henzler</a>,
-    <a href="https://hurjunhwa.github.io/">Junhwa Hur</a>,
-    <a href="https://bragilee.github.io/">Runze Li</a>, <br>
-    <strong>Jonathan T. Barron</strong>,
-    <a href="https://pratulsrinivasan.github.io/">Pratul P. Srinivasan</a>,
-    <a href="https://dorverbin.github.io/">Dor Verbin</a>
+    <strong>Yeojin Song*</strong>,
+    <span style="color: #888;">Luca Quagliato*</span>,
+    <span style="color: #888;">Sewon Jang</span>,
+    <span style="color: #888;">Egene Chung</span>,
+    <span style="color: #888;">Seoyeon Ko</span>,
+    <span style="color: #888;">Seoyeong Hwang</span>,
+    <span style="color: #888;">Junhyug Noh</span>,
+    <span style="color: #888;">Taeyong Lee</span>
     <br>
-    <em>SIGGRAPH</em>, 2026
+    <em>IEEE Access</em>, 2026
     <br>
+    <!--
     <a href="https://gr3en-relight.github.io/">project page</a> /
     <a href="https://arxiv.org/abs/2601.16272">arXiv</a>
+    -->
     <p></p>
     <p>
-		Distilling the outputs of a video-to-video relighting diffusion model into a 3D reconstruction enables controllable 3D relighting of room-scale scenes.
+		We propose a frequency domain-based gait recognition framework using FFT on openpose keypoints, integrating video and IMU sensor data. To support this, we introduce the E-GAITS dataset covering diverse surveillance conditions (indoor/outdoor, varying lighting). Our method achieves high recognition accuracy, with IMU integration particularly boosting performance in low-light environments.
     </p>
   </td>
 </tr>
